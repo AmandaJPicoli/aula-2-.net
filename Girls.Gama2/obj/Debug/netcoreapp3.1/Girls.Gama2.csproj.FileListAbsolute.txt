@@ -1,0 +1,13 @@
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\bin\Debug\netcoreapp3.1\Girls.Gama2.exe
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\bin\Debug\netcoreapp3.1\Girls.Gama2.deps.json
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\bin\Debug\netcoreapp3.1\Girls.Gama2.runtimeconfig.json
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\bin\Debug\netcoreapp3.1\Girls.Gama2.runtimeconfig.dev.json
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\bin\Debug\netcoreapp3.1\Girls.Gama2.dll
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\bin\Debug\netcoreapp3.1\Girls.Gama2.pdb
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\obj\Debug\netcoreapp3.1\Girls.Gama2.csprojAssemblyReference.cache
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\obj\Debug\netcoreapp3.1\Girls.Gama2.AssemblyInfoInputs.cache
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\obj\Debug\netcoreapp3.1\Girls.Gama2.AssemblyInfo.cs
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\obj\Debug\netcoreapp3.1\Girls.Gama2.csproj.CoreCompileInputs.cache
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\obj\Debug\netcoreapp3.1\Girls.Gama2.dll
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\obj\Debug\netcoreapp3.1\Girls.Gama2.pdb
+C:\WORKSPACE\Girls.Gama2\Girls.Gama2\obj\Debug\netcoreapp3.1\Girls.Gama2.genruntimeconfig.cache
