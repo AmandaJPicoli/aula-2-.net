@@ -1,39 +1,33 @@
-﻿using System;
+﻿using Girls.Gama2.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Girls.Gama2.Entidades
 {
-    public class Boleto
+    public class Boleto : Pagamento, IPagamento
     {
         private const int DiasVencimento = 15;
         private const double Juros = 0.10;
 
+        #region Construtor
         public Boleto(double valor, string cpf, string descricao)
         {
             Valor = valor;
             Cpf = cpf;
-            DataEmissao = DateTime.Now;
             Descricao = descricao;
-            Confirmacao = false;
+            DataEmissao = DateTime.Now;
         }
+        #endregion
 
+        #region Props
         public Guid CodigoBarra { get; set; }
-
-        public double Valor { get; set; }
-
-        public DateTime DataEmissao { get; set; }
-
         public DateTime DataVencimento { get; set; }
-
-        public DateTime DataPagamento { get; set; }
-
-        public string Cpf { get; set; }
-
+        public DateTime DataEmissao { get; set; }
         public string Descricao { get; set; }
+        #endregion
 
-        public bool Confirmacao { get; set; }
-
+        #region Metodos
         public void GerarBoleto()
         {
             CodigoBarra = Guid.NewGuid();
@@ -61,5 +55,8 @@ namespace Girls.Gama2.Entidades
             DataPagamento = DateTime.Now;
             Confirmacao = true;
         }
+
+        #endregion
+
     }
 }

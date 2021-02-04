@@ -9,30 +9,37 @@ namespace Girls.Gama2
     {
         private static List<Boleto> listaBoleto;
         private static List<Dinheiro> listaDinheiro;
-
+        private static List<Geladeira> listaGeladeira;
+        private static List<Televisao> listaTelevisao;
         static void Main(string[] args)
         {
             listaBoleto = new List<Boleto>();
             listaDinheiro = new List<Dinheiro>();
+            listaGeladeira = new List<Geladeira>();
+            listaTelevisao = new List<Televisao>();
 
             while (true)
             {
                 Console.WriteLine("\n\n===============================================================");
-                Console.WriteLine("======================== LOJA DA AMANDA =======================\n");
+                Console.WriteLine("========================   LOJA DA AMANDA   =======================\n");
                 Console.WriteLine("Escolha uma opção: ");
-                Console.WriteLine("1-Compra | 2-Pagar Boleto | 3-Relatório");
+                Console.WriteLine("1-Add no carrinho de compras | 2-Consultar produtos no carrinho | 4-Pagar Boleto | 5-Relatório");
 
                 var opcao = int.Parse(Console.ReadLine());
 
                 switch (opcao)
                 {
                     case 1:
-                        Comprar();
+                        CadastrarProduto();
+                        
                         break;
                     case 2:
-                        PagamentoBoleto();
+                        ConsultaCarrinho();
                         break;
                     case 3:
+                        PagamentoBoleto();
+                        break;
+                    case 4:
                         Relatorio();
                         break;
                     default:
@@ -41,8 +48,127 @@ namespace Girls.Gama2
             }
         }
 
+        public static void CadastrarProduto()
+        {
+            Console.WriteLine("=============  ADICIONAR NO CARRINHO  =============");
+            Console.WriteLine("\nMarca:");
+            var marca = Console.ReadLine();
+
+            Console.WriteLine("\nModelo:");
+            var modelo = Console.ReadLine();
+
+            Console.WriteLine("\nPreço:");
+            var preco = Double.Parse(Console.ReadLine());
+
+            Console.WriteLine("1-Televisão | 2-Geladeira:");
+
+            var opcao = int.Parse(Console.ReadLine());
+
+            switch (opcao)
+            {
+                case 1:
+                    CadTelevisao(marca, modelo, preco);
+                    break;
+                case 2:
+                    CadGeladeira(marca, modelo, preco);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        public static void CadTelevisao(string marca, string modelo, double preco)
+        {
+            var televisao = new Televisao(preco, marca, modelo);
+            televisao.Promocao();
+
+            Console.WriteLine($"O código para pagamento desse produto foi gerado e o" +
+                $" desconto aplicado. \nPreço: {televisao.Preco} \nCódigo de pagamento: {televisao.Id} ");
+
+            listaTelevisao.Add(televisao);
+        }
+
+        public static void CadGeladeira(string marca, string modelo, double preco)
+        {
+            var geladeira = new Geladeira(preco, marca, modelo);
+            geladeira.Promocao();
+
+            Console.WriteLine($"O código para pagamento desse produto foi gerado e o" +
+                $" desconto aplicado. \nPreço: {geladeira.Preco} \nCódigo de pagamento: {geladeira.Id} ");
+
+            listaGeladeira.Add(geladeira);
+        }
+
+        public static void ConsultaCarrinho()
+        {
+            Console.WriteLine("---------------------------- CARRINHO DE COMPRAS ----------------------------");
+            Console.WriteLine("\n----------------------------      Geladeira      ----------------------------");
+
+            foreach (var item in listaGeladeira)
+            {
+                Console.WriteLine($"\nMarca: {item.Marca} \nModelo: {item.Modelo} \nPreço: {item.Preco} \nCódigo para pagamento: {item.Id}");
+
+            }
+            Console.WriteLine("\n----------------------------      Televisão      ----------------------------");
+
+            foreach (var item in listaTelevisao)
+            {
+                Console.WriteLine($"\nMarca: {item.Marca} \nModelo: {item.Modelo} \nPreço: {item.Preco} \nCódigo para pagamento: {item.Id}");
+
+            }
+            Console.WriteLine("---------------------------- FIM DO CARRINHO  ----------------------------\n\n");
+
+            Console.WriteLine("1-Finalizar compra | 2-Voltar:");
+
+            var opcao = int.Parse(Console.ReadLine());
+
+            switch (opcao)
+            {
+                case 1:
+                    Comprar();
+                    break;
+                case 2:
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
+
         public static void Comprar()
         {
+            Console.WriteLine("Digite o código de pagamento do produto:");
+            var codigoProduto = Guid.Parse(Console.ReadLine());
+
+            var geladeira = listaGeladeira
+                          .Where(item => item.Id == codigoProduto)
+                          .FirstOrDefault();
+
+            var televisao = listaTelevisao
+                          .Where(item => item.Id == codigoProduto)
+                          .FirstOrDefault();
+
+            var valor = geladeira != null ? geladeira.Preco : televisao.Preco;
+
+            if (geladeira != null)
+            {
+                Console.WriteLine($"\nMarca: {geladeira.Marca} \nModelo: {geladeira.Modelo} \nPreço: {geladeira.Preco}");
+            }
+            else if (televisao != null)
+            {
+                Console.WriteLine($"\nMarca: {televisao.Marca} \nModelo: {televisao.Modelo} \nPreço: {televisao.Preco}");
+            }
+            else
+            {
+                Console.WriteLine("Produto não encontrado");
+                return;
+            }
+
+            Console.WriteLine("\nConfirmar compra: \nDigite o CPF do cliente:");
+            var cpf = Console.ReadLine();
+
             Console.WriteLine("\nForma de pagamento:");
             Console.WriteLine("1-Dinheiro | 2-Boleto");
 
@@ -51,10 +177,10 @@ namespace Girls.Gama2
             switch (opcao)
             {
                 case 1:
-                    Dinheiro();
+                    Dinheiro(valor);
                     break;
                 case 2:
-                    Boleto();
+                    Boleto(cpf, valor);
                     break;
                 default:
                     break;
@@ -62,16 +188,13 @@ namespace Girls.Gama2
 
         }
 
-        public static void Dinheiro()
+        public static void Dinheiro(double valor)
         {
-            Console.WriteLine("Digite o valor da compra:");
-            var valor = Double.Parse(Console.ReadLine());
-
             Console.WriteLine("Valor recebido: ");
             var recebido = Double.Parse(Console.ReadLine());
 
             var dinheiro = new Dinheiro(valor);
-            dinheiro.DarDesconto();
+            dinheiro.Pagar();
 
             Console.WriteLine($"\nCompras a vista tem desconto de 5% === R$ {dinheiro.Valor}");
 
@@ -84,16 +207,9 @@ namespace Girls.Gama2
             listaDinheiro.Add(dinheiro);
         }
 
-        public static void Boleto()
+        public static void Boleto(string cpf, double valor)
         {
-
-            Console.WriteLine("Digite o valor da compra:");
-            var valor = Double.Parse(Console.ReadLine());
-
-            Console.WriteLine("Digite o CPF do cliente:");
-            var cpf = Console.ReadLine();
-
-            Console.WriteLine("Digite uma descricao da compra:");
+            Console.WriteLine("Descrição do boleto:");
             var descricao = Console.ReadLine();
 
             var boleto = new Boleto(valor, cpf, descricao);

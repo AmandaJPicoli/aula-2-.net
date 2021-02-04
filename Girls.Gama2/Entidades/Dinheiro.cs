@@ -1,28 +1,34 @@
-﻿using System;
+﻿using Girls.Gama2.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Girls.Gama2.Entidades
 {
-    public class Dinheiro
+    public class Dinheiro : Pagamento, IPagamento
     {
         private const double Desconto = 0.05;
+
+        #region Construtor
         public Dinheiro(double valor)
         {
-            Valor = valor;
             DescricaoCompra = "Pagamento em dinheiro";
-            DataPagamento = DateTime.Now;
+            Valor = valor;
         }
+        #endregion
 
-        public double Valor { get; set; }
-        public DateTime DataPagamento { get; set; }
+        #region Props
         public string DescricaoCompra { get; set; }
 
+        #endregion
 
-        public void DarDesconto()
+        #region Metodos
+        public void Pagar()
         {
             var desconto = Valor * Desconto;
             Valor -= desconto;
         }
+        #endregion
+
     }
 }
